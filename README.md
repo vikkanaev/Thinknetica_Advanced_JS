@@ -1,2 +1,1 @@
-# Thinknetica_Advanced_JS
-Advanced JavaScript course on Thinknetica
+## Репозиторий для курса ["Продвинутый Javascript"](https://thinknetica.com/fullstack_javascript) от школы  Thinknetica
