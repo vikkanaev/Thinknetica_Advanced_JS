@@ -6,6 +6,6 @@ const isConsonant = c => consonants.indexOf(c.toLowerCase()) !== -1;
 const input = prompt('Plz enter some text', 'Mary had a little lamb');
 const arr = input.split('');
 const vowelsCount = arr.filter(x => isVowel(x)).length;
-const consonantsCount = arr.filter(x => !isVowel(x)).length
+const consonantsCount = arr.filter(x => isConsonant(x)).length
 
 console.log(`Vowels Count: ${vowelsCount} and Consonants Count: ${consonantsCount}`)
