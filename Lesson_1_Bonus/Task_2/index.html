@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- добавим стили mocha для отображения результатов -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+  <!-- добавляем сам фреймворк mocha -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+  <script>
+    // включаем режим тестирования в стиле BDD
+    mocha.setup('bdd');
+  </script>
+  <!-- добавим chai -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+  <script>
+    // chai предоставляет большое количество функций. Объявим assert глобально
+    let assert = chai.assert;
+  </script>
+</head>
+
+<body>
+  <script type="text/javascript" src="script.js"></script>
+  <!-- скрипт со спецификацией (describe, it...) -->
+  <script src="test.js"></script>
+  <div>
+    2. Нормализация введенного времени в 24-часовой формат <br>
+    Привести заданное время в формат hh:mm где hh - час с ведущим нулем (01, 07, 12). Примеры входных данных и результата:<br>
+    “12: 07 am” - “00:07”<br>
+    “03.2 pm” - “15:02”<br>
+    “1-17 am” - “01:17”<br>
+    “34:67” - выдать ошибку<br>
+  </div>
+  <!-- элемент с id="mocha" будет содержать результаты тестов -->
+  <div id="mocha"></div>
+  <!-- запускаем тесты! -->
+  <script>
+    mocha.run();
+  </script>
+</body>
+
+</html>
