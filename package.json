@@ -1,0 +1,28 @@
+{
+  "name": "thinknetica_advanced_js",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "eslint-config-google": "^0.14.0",
+    "mocha": "^4.1.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vikkanaev/Thinknetica_Advanced_JS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vikkanaev/Thinknetica_Advanced_JS/issues"
+  },
+  "homepage": "https://github.com/vikkanaev/Thinknetica_Advanced_JS#readme"
+}
