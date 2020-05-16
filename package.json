@@ -13,7 +13,8 @@
     "mocha": "^4.1.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "./node_modules/.bin/eslint **/*.js"
   },
   "repository": {
     "type": "git",

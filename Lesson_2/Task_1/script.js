@@ -1,5 +1,5 @@
 /**
- * My funy function
+ * Анализатор масива
  * @param {array} arr valiable
  * @return {string} The sum of the two numbers.
  */
