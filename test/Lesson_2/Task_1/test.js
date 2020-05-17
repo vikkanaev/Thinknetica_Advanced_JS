@@ -1,10 +1,16 @@
 const file = require('../../../Lesson_2/Task_1/script.js');
 const assert = require('assert');
 
-describe('timeConverter', function() {
-  it('Normal exmple', function() {
+describe('arrayAnalizer', function() {
+  it('Normal array with numbers only', function() {
     const input = [91, 93, 45, -67, -96, -40, 34, -96, 42, -58];
     const expectedResult = {count: 5, sum: -357};
+    assert.deepEqual(file.arrayAnalizer(input), expectedResult);
+  });
+
+  it('Normal array without negative numbers', function() {
+    const input = [91, 93, 45];
+    const expectedResult = {count: 0, sum: 0};
     assert.deepEqual(file.arrayAnalizer(input), expectedResult);
   });
 
