@@ -168,9 +168,6 @@ function buyTicket(flightName, buyTime, fullName, type = 0) {
 const a = buyTicket('BH118', makeTime(5, 10), 'Petrov I. I.');
 console.log(a);
 
-// const b = buyTicket('BH118', makeTime(5, 10), 'Sidorov I. I.');
-// console.log(b);
-
 /**
  *
  */

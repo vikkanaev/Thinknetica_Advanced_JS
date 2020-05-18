@@ -66,6 +66,15 @@ describe('eRegistration', function() {
       const expectedResult = new Error('You already registered.');
       assert.deepEqual(eRegistration(ticket, fullName, nowTime), expectedResult);
     });
+
+    it('returns error when timestamp not valid', function() {
+      const ticket = 'BH118-B50';
+      const fullName = 'Ivanov I. I.';
+      // const nowTime = makeTime(14, 1);
+      const nowTime = 11111111111111111111111111111111111;
+      const expectedResult = new Error('timestamp not valid.');
+      assert.deepEqual(eRegistration(ticket, fullName, nowTime), expectedResult);
+    });
   });
 });
 

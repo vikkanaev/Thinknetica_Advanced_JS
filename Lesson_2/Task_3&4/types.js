@@ -25,3 +25,15 @@
  * @property {number} buyTime
  * @property {number} registrationTime
  */
+
+/**
+ * Отчет о рейсе на данный момент
+ *
+ * @typedef {Object} Report
+ * @property {string} flight Номер рейса
+ * @property {boolean} registration Доступна регистрация на самолет
+ * @property {boolean} complete Регистрация завершена или самолет улетел
+ * @property {number} countOfSeats Общее количество мест
+ * @property {number} reservedSeats Количество купленных (забронированных) мест
+ * @property {number} registeredSeats Количество пассажиров, прошедших регистрацию
+ */

@@ -1,13 +1,3 @@
-const findFlightByTicket = (ticket) => {
-  flightName = ticket.split('-')[0];
-  return flights[flightName];
-};
-
-const timestampDecrease = (timestamp, hours) => {
-  const date = new Date(timestamp);
-  return date.setHours(date.getHours() - hours);
-};
-
 /**
  * Функция пробует произвести электронную регистрацию пассажира
  *
@@ -21,7 +11,10 @@ const timestampDecrease = (timestamp, hours) => {
  * @return {boolean} успешна ли регистрация
  */
 function eRegistration(ticket, fullName, nowTime) {
-  flight = findFlightByTicket(ticket);
+  const timestampValid = validateTimestamp(nowTime);
+  if (!timestampValid) return new Error('timestamp not valid');
+
+  flight = findFlightByCode(ticket);
   if (typeof(flight) === 'undefined') return new Error('Flight not found.');
 
   ticketObject = flight.tickets.filter((t) => t.id === ticket)[0];
