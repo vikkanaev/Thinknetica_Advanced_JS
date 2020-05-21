@@ -1,55 +1,57 @@
 const arrayAnalizer = require('../../../Lesson_3/Task_1/script.js').arrayAnalizer;
 const expect = require('chai').expect;
-const runTest = (input, expectedResult) => expect(arrayAnalizer(input)).to.deep.equal(expectedResult);
-const runErrorTest = (input, expectedResult) => expect(() => arrayAnalizer(input)).to.throw(expectedResult);
+const testThatInputCreatesExpectedResult = (input, expectedResult) => {
+  expect(arrayAnalizer(input)).to.deep.equal(expectedResult);
+};
+const testThatInputThrowsError = (input, expectedResult) => expect(() => arrayAnalizer(input)).to.throw(expectedResult);
 
 describe('arrayAnalizer', () => {
-  it('Normal array with numbers only', () => {
+  it('Returns Information object for array of numbers', () => {
     const input = [91, 93, 45, -67, -96, -40, 34, -96, 42, -58];
     const expectedResult = {count: 5, sum: -357};
-    runTest(input, expectedResult);
+    testThatInputCreatesExpectedResult(input, expectedResult);
   });
 
-  it('Normal array without negative numbers', () => {
+  it('Returns empty Information object for array without negative numbers', () => {
     const input = [91, 93, 45];
     const expectedResult = {count: 0, sum: 0};
-    runTest(input, expectedResult);
+    testThatInputCreatesExpectedResult(input, expectedResult);
   });
 
-  it('Array with -0 number', () => {
+  it('Returns empty Information object for array with -0 number', () => {
     const input = [91, 93, 45, -0];
     const expectedResult = {count: 0, sum: 0};
-    runTest(input, expectedResult);
+    testThatInputCreatesExpectedResult(input, expectedResult);
   });
 
-  it('Array with -0 number and another negative number ', () => {
+  it('Returns Information object for array with -0 number and another negative number ', () => {
     const input = [91, 93, -1, 45, -0];
     const expectedResult = {count: 1, sum: -1};
-    runTest(input, expectedResult);
+    testThatInputCreatesExpectedResult(input, expectedResult);
   });
 
-  it('text instead of array on input', () => {
+  it('Throws error for text', () => {
     const input = 'some text';
     const expectedResult = 'Array is required.';
-    runErrorTest(input, expectedResult);
+    testThatInputThrowsError(input, expectedResult);
   });
 
-  it('number insted of array on input', () => {
+  it('Throws error for number', () => {
     const input = 42;
     const expectedResult = 'Array is required.';
-    runErrorTest(input, expectedResult);
+    testThatInputThrowsError(input, expectedResult);
   });
 
-  it('Not a number in Array', () => {
+  it('Throws error for not number array', () => {
     const input = [91, 93, 'some text'];
     const expectedResult = 'All elements must be a number.';
-    runErrorTest(input, expectedResult);
+    testThatInputThrowsError(input, expectedResult);
   });
 
-  it('Empty Array', () => {
+  it('Returns empty Information object for empty array', () => {
     const input = [];
     const expectedResult = {count: 0, sum: 0};
-    runTest(input, expectedResult);
+    testThatInputCreatesExpectedResult(input, expectedResult);
   });
 });
 

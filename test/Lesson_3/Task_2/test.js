@@ -1,10 +1,12 @@
 const textAnalizer = require('../../../Lesson_3/Task_2/script.js').textAnalizer;
 const expect = require('chai').expect;
-const runTest = (input, expectedResult) => expect(textAnalizer(input)).to.deep.equal(expectedResult);
-const runErrorTest = (input, expectedResult) => expect(() => textAnalizer(input)).to.throw(expectedResult);
+const testThatInputCreatesExpectedResult = (input, expectedResult) => {
+  expect(textAnalizer(input)).to.deep.equal(expectedResult);
+};
+const testThatInputThrowsError = (input, expectedResult) => expect(() => textAnalizer(input)).to.throw(expectedResult);
 
 describe('textAnalizer', () => {
-  it('Normal String', () => {
+  it('Returns Information object for normal string', () => {
     const input = 'Lorem ipsum dolor sit amet.';
     const expectedResult = [
       {word: 'Lorem', sum: 511},
@@ -13,40 +15,40 @@ describe('textAnalizer', () => {
       {word: 'sit', sum: 336},
       {word: 'amet.', sum: 469},
     ];
-    runTest(input, expectedResult);
+    testThatInputCreatesExpectedResult(input, expectedResult);
   });
 
-  it('String with new line symbol', () => {
+  it('Returns Information object for string with new line symbol', () => {
     const input = 'ipsum\n dolor';
     const expectedResult = [
       {word: 'ipsum\n', sum: 568},
       {word: 'dolor', sum: 544},
     ];
-    runTest(input, expectedResult);
+    testThatInputCreatesExpectedResult(input, expectedResult);
   });
 
-  it('Array instead of String on input', () => {
+  it('Throws error for Array', () => {
     const input = ['some text'];
     const expectedResult = 'String is required.';
-    runErrorTest(input, expectedResult);
+    testThatInputThrowsError(input, expectedResult);
   });
 
-  it('Number instead of String on input', () => {
+  it('Throws error for Number', () => {
     const input = 42;
     const expectedResult = 'String is required.';
-    runErrorTest(input, expectedResult);
+    testThatInputThrowsError(input, expectedResult);
   });
 
-  it('NaN instead of String on input', () => {
+  it('Throws error for NaN', () => {
     const input = NaN;
     const expectedResult = 'String is required.';
-    runErrorTest(input, expectedResult);
+    testThatInputThrowsError(input, expectedResult);
   });
 
-  it('Empty String on input', () => {
+  it('Returns empty Information object for empty string', () => {
     const input = '';
     const expectedResult = [{word: '', sum: 0}];
-    runTest(input, expectedResult);
+    testThatInputCreatesExpectedResult(input, expectedResult);
   });
 });
 
