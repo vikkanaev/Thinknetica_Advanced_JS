@@ -1,6 +1,7 @@
 const textAnalizer = require('../../../Lesson_3/Task_2/script.js').textAnalizer;
 const expect = require('chai').expect;
 const runTest = (input, expectedResult) => expect(textAnalizer(input)).to.deep.equal(expectedResult);
+const runErrorTest = (input, expectedResult) => expect(() => textAnalizer(input)).to.throw(expectedResult);
 
 describe('textAnalizer', () => {
   it('Normal String', () => {
@@ -27,22 +28,19 @@ describe('textAnalizer', () => {
   it('Array instead of String on input', () => {
     const input = ['some text'];
     const expectedResult = 'String is required.';
-    const badFn = () => textAnalizer(input);
-    expect(badFn).to.throw(expectedResult);
+    runErrorTest(input, expectedResult);
   });
 
   it('Number instead of String on input', () => {
     const input = 42;
     const expectedResult = 'String is required.';
-    const badFn = () => textAnalizer(input);
-    expect(badFn).to.throw(expectedResult);
+    runErrorTest(input, expectedResult);
   });
 
   it('NaN instead of String on input', () => {
     const input = NaN;
     const expectedResult = 'String is required.';
-    const badFn = () => textAnalizer(input);
-    expect(badFn).to.throw(expectedResult);
+    runErrorTest(input, expectedResult);
   });
 
   it('Empty String on input', () => {

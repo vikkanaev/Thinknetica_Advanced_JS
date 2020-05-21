@@ -1,6 +1,7 @@
 const arrayAnalizer = require('../../../Lesson_3/Task_1/script.js').arrayAnalizer;
 const expect = require('chai').expect;
 const runTest = (input, expectedResult) => expect(arrayAnalizer(input)).to.deep.equal(expectedResult);
+const runErrorTest = (input, expectedResult) => expect(() => arrayAnalizer(input)).to.throw(expectedResult);
 
 describe('arrayAnalizer', () => {
   it('Normal array with numbers only', () => {
@@ -30,22 +31,19 @@ describe('arrayAnalizer', () => {
   it('text instead of array on input', () => {
     const input = 'some text';
     const expectedResult = 'Array is required.';
-    const badFn = () => arrayAnalizer(input);
-    expect(badFn).to.throw(expectedResult);
+    runErrorTest(input, expectedResult);
   });
 
   it('number insted of array on input', () => {
     const input = 42;
     const expectedResult = 'Array is required.';
-    const badFn = () => arrayAnalizer(input);
-    expect(badFn).to.throw(expectedResult);
+    runErrorTest(input, expectedResult);
   });
 
   it('Not a number in Array', () => {
     const input = [91, 93, 'some text'];
     const expectedResult = 'All elements must be a number.';
-    const badFn = () => arrayAnalizer(input);
-    expect(badFn).to.throw(expectedResult);
+    runErrorTest(input, expectedResult);
   });
 
   it('Empty Array', () => {
