@@ -47,5 +47,11 @@ describe('arrayAnalizer', () => {
     const badFn = () => arrayAnalizer(input);
     expect(badFn).to.throw(expectedResult);
   });
+
+  it('Empty Array', () => {
+    const input = [];
+    const expectedResult = {count: 0, sum: 0};
+    runTest(input, expectedResult);
+  });
 });
 
