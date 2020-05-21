@@ -12,7 +12,7 @@ const charCode = (word) => word.split('').map((x) => x.charCodeAt(0)).reduce((a,
  * @return {(Array.<Information>|Error)} - объект Information или сообщение об ошибке
  */
 function textAnalizer(str) {
-  if (typeof(str) !='string') return new Error('String is required.');
+  if (typeof(str) !='string') throw new Error('String is required.');
   if (str === '') return [{word: '', sum: 0}];
 
   const words = str.split(' ');

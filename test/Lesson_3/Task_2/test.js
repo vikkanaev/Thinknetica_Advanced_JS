@@ -1,7 +1,8 @@
-const file = require('../../../Lesson_3/Task_2/script.js');
-const assert = require('assert');
+const textAnalizer = require('../../../Lesson_3/Task_2/script.js').textAnalizer;
+const expect = require('chai').expect;
+const runTest = (input, expectedResult) => expect(textAnalizer(input)).to.deep.equal(expectedResult);
 
-describe('arrayAnalizer', () => {
+describe('textAnalizer', () => {
   it('Normal String', () => {
     const input = 'Lorem ipsum dolor sit amet.';
     const expectedResult = [
@@ -11,7 +12,7 @@ describe('arrayAnalizer', () => {
       {word: 'sit', sum: 336},
       {word: 'amet.', sum: 469},
     ];
-    assert.deepEqual(file.textAnalizer(input), expectedResult);
+    runTest(input, expectedResult);
   });
 
   it('String with new line symbol', () => {
@@ -20,31 +21,34 @@ describe('arrayAnalizer', () => {
       {word: 'ipsum\n', sum: 568},
       {word: 'dolor', sum: 544},
     ];
-    assert.deepEqual(file.textAnalizer(input), expectedResult);
+    runTest(input, expectedResult);
   });
 
   it('Array instead of String on input', () => {
     const input = ['some text'];
-    const expectedResult = new Error('String is required.');
-    assert.deepEqual(file.textAnalizer(input), expectedResult);
+    const expectedResult = 'String is required.';
+    const badFn = () => textAnalizer(input);
+    expect(badFn).to.throw(expectedResult);
   });
 
   it('Number instead of String on input', () => {
     const input = 42;
-    const expectedResult = new Error('String is required.');
-    assert.deepEqual(file.textAnalizer(input), expectedResult);
+    const expectedResult = 'String is required.';
+    const badFn = () => textAnalizer(input);
+    expect(badFn).to.throw(expectedResult);
   });
 
   it('NaN instead of String on input', () => {
     const input = NaN;
-    const expectedResult = new Error('String is required.');
-    assert.deepEqual(file.textAnalizer(input), expectedResult);
+    const expectedResult = 'String is required.';
+    const badFn = () => textAnalizer(input);
+    expect(badFn).to.throw(expectedResult);
   });
 
   it('Empty String on input', () => {
     const input = '';
     const expectedResult = [{word: '', sum: 0}];
-    assert.deepEqual(file.textAnalizer(input), expectedResult);
+    runTest(input, expectedResult);
   });
 });
 
