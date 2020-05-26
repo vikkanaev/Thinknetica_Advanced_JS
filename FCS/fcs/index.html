@@ -4,14 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flight Control System</title>
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
 </head>
 <body>
-<script src="fcs.js"></script>
-<script src="fcs.utils.js"></script>
-<script src="add-flight.js"></script>
-<script src="buy-ticket.js"></script>
-<script src="e-registration.js"></script>
-<script src="flight-report.js"></script>
-<script src="script.js"></script>
+    <template id="table-template">
+        <h2 class="tableTitle">TABLE</h2>
+        <table class="tg">
+            <thead>
+                <tr>
+                    <th>Номер билета</th>
+                    <th>Место</th>
+                    <th>Полное имя пассажира</th>
+                    <th>Регистрация</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"> 
+            </tbody>
+        </table>
+        <br>    
+    </template>
+
+    <template id="ticket-template">
+        <tr>
+            <td class="titleName">asd</td>
+            <td class="seatNumber">sdsdsdsd</td>
+            <td class="fullName">ffffff</td>
+            <td class="registration">yes</td>   
+        </tr>
+    </template>
+
+    <template id="err-template">
+        <div>
+            <b class="errTitle">Нет информации о рейсе:</b>
+        </div>
+    </template>
+
+    <div id="flight-details"></div>
+    
+    <script src="fcs.js"></script>
+    <script src="fcs.utils.js"></script>
+    <script src="add-flight.js"></script>
+    <script src="buy-ticket.js"></script>
+    <script src="e-registration.js"></script>
+    <script src="flight-report.js"></script>
+    <script src="flight-details.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
