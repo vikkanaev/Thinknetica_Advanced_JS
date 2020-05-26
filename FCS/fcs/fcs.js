@@ -3,7 +3,7 @@
 /**
  * @type {World} Список всех рейсов
  */
-const bigWorld = {
+let bigWorld = {
   flights: {},
   history: [],
 };
