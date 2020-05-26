@@ -9,7 +9,7 @@ const ERR_TEMPLATE = 'err-template';
  */
 function flightDetails(flightName) {
   const flight = bigWorld.flights[flightName];
-  if (flight === undefined) {
+  if (!flight) {
     renderErr(flightName);
     return;
   }
