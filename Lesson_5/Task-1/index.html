@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Paint Revival</title>
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+  <template id="canvasTemplate">
+    <table id="canvasBody" cellspacing="0" cellpadding="0">
+    </table>
+    <br>
+  </template>
+
+  <div class="activeColorsDiv">
+    <table class="activeColors" id="activeColors">
+      <tr>
+        <td>Color 1</td>
+        <td id="color1"></td>
+      </tr>
+      <tr>
+        <td>Color 2</td>
+        <td id="color2"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="palette" class="paletteDiv">
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td bgcolor="transparent" data-color="transparent"></td>
+        <td bgcolor="black" data-color="black"></td>
+        <td bgcolor="gray" data-color="gray"></td>
+        <td bgcolor="brown" data-color="brown"></td>
+        <td bgcolor="red" data-color="red"></td>
+        <td bgcolor="orange" data-color="orange"></td>
+        <td bgcolor="yellow" data-color="yellow"></td>
+        <td bgcolor="green" data-color="green"></td>
+        <td bgcolor="cyan" data-color="cyan"></td>
+        <td bgcolor="blue" data-color="blue"></td>
+        <td bgcolor="DarkMagenta" data-color="DarkMagenta"></td>
+      </tr>
+    </table>
+  </div>
+  
+  <div id="canvas"></div>
+
+  <div>
+    <h2>Инструкция:</h2>
+    <p>
+      <ul>
+        <li>Рисовать можно двумя цветами (Color 1 и Color 2)</li>
+        <li>Для выбора цвета Color 1 кликните в нужный цвет на палитре</li>
+        <li>Для выбора цвета Color 2 кликните в нужный цвет на палитре удерживая клавишу command(⌘) (или ctrl для windows/linux)</li>
+        <li>Для рисования цветом Color 1 кликните по холсту</li>
+        <li>Для рисования цветом Color 2 кликните по холсту удерживая клавишу command(⌘) (или ctrl для windows/linux)</li>
+        <li>Что бы стереть точку на холсте кликните по точке удерживая клавишу shift(⇧)</li>
+      </ul>
+      
+    </p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
