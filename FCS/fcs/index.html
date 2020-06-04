@@ -40,6 +40,27 @@
     </template>
 
     <div id="flight-details"></div>
+
+    <div id="buy-ticket-block">
+        <h2>Buy ticket</h2>
+        <div id='errNotify'>
+            <b>Ошибка:</b>
+            <ul>
+                <li id='flightNameErr' class="errMsg"></li>
+                <li id='fullnameErr' class="errMsg"></li>
+                <li id='buyFuncErr' class="errMsg"></li>
+            </ul>
+        </div>
+        <div id="notify">
+            <span class="notify-clsbtn">&times;</span>
+            <span id='notify-msg'></span>
+        </div>
+        <form id="buy-ticket-form">
+            <input name="flightName" placeholder="Please enter flightName">
+            <input name="fullname" placeholder="Please enter your full name">
+            <button type="submit" id='buy-ticket-button'>Buy</button>
+        </form>
+    </div>
     
     <script src="fcs.js"></script>
     <script src="fcs.utils.js"></script>
@@ -49,5 +70,6 @@
     <script src="flight-report.js"></script>
     <script src="flight-details.js"></script>
     <script src="script.js"></script>
+    <script src="buy-ticket-form.js"></script>
 </body>
 </html>

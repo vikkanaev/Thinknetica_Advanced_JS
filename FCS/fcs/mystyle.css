@@ -30,3 +30,88 @@
     text-align: left;
     vertical-align: top
 }
+
+input, select {
+  width: 70%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input:focus {
+    outline-width: 0;
+}
+
+.invalid {
+    animation: shake 0.2s ease-in-out 0s 2;
+    box-shadow: 0 0 0.5em red;
+}
+
+@keyframes shake {
+  0% { margin-left: 0rem; }
+  25% { margin-left: 0.5rem; }
+  75% { margin-left: -0.5rem; }
+  100% { margin-left: 0rem; }
+}
+
+#errNotify {
+    margin: 8px 0;
+    padding: 12px 20px;
+    font-size: 12px;
+    width: 70%;
+    color: #fff;
+    display: none;
+}
+
+#errNotify.error {
+    background-color: #DD2C00;
+    display: block;
+}
+
+#notify  {
+    margin: 8px 0;
+    padding: 12px 20px;
+    font-size: 12px;
+    width: 70%;
+    height: 20px;
+    color: #fff;
+    display: none;
+}
+
+#notify.error {
+    background-color: #DD2C00;
+    display: block;
+}
+
+#notify.success {
+    background-color: #4CAF50;
+    display: block;
+    height: 50px;
+}
+
+.notify-clsbtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.notify-clsbtn:hover {
+  color: black;
+}
+
+.errMsg {
+    display: none;
+}
+
+.showErrMsg {
+    display: block;
+    color: #fff;
+}
