@@ -31,7 +31,7 @@
     vertical-align: top
 }
 
-input, select {
+.buy-ticket__form__input {
   width: 70%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -41,11 +41,11 @@ input, select {
   box-sizing: border-box;
 }
 
-input:focus {
+.buy-ticket__form__input:focus {
     outline-width: 0;
 }
 
-.invalid {
+.buy-ticket__form__input_invalid {
     animation: shake 0.2s ease-in-out 0s 2;
     box-shadow: 0 0 0.5em red;
 }
@@ -57,42 +57,27 @@ input:focus {
   100% { margin-left: 0rem; }
 }
 
-#errNotify {
+.buy-ticket__notify  {
     margin: 8px 0;
     padding: 12px 20px;
     font-size: 12px;
     width: 70%;
     color: #fff;
-    display: none;
+    display: block;
 }
 
-#errNotify.error {
+.buy-ticket__notify_error {
     background-color: #DD2C00;
     display: block;
 }
 
-#notify  {
-    margin: 8px 0;
-    padding: 12px 20px;
-    font-size: 12px;
-    width: 70%;
-    height: 20px;
-    color: #fff;
-    display: none;
-}
-
-#notify.error {
-    background-color: #DD2C00;
-    display: block;
-}
-
-#notify.success {
+.buy-ticket__notify_success {
     background-color: #4CAF50;
     display: block;
     height: 50px;
 }
 
-.notify-clsbtn {
+.buy-ticket__notify__close-button {
   margin-left: 15px;
   color: white;
   font-weight: bold;
@@ -103,15 +88,10 @@ input:focus {
   transition: 0.3s;
 }
 
-.notify-clsbtn:hover {
+.buy-ticket__notify__close-button:before {
+    content: "×";
+}
+
+.buy-ticket__notify__close-button:hover {
   color: black;
-}
-
-.errMsg {
-    display: none;
-}
-
-.showErrMsg {
-    display: block;
-    color: #fff;
 }

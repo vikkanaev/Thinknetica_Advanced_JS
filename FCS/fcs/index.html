@@ -41,24 +41,22 @@
 
     <div id="flight-details"></div>
 
-    <div id="buy-ticket-block">
-        <h2>Buy ticket</h2>
-        <div id='errNotify'>
-            <b>Ошибка:</b>
-            <ul>
-                <li id='flightNameErr' class="errMsg"></li>
-                <li id='fullnameErr' class="errMsg"></li>
-                <li id='buyFuncErr' class="errMsg"></li>
-            </ul>
-        </div>
-        <div id="notify">
-            <span class="notify-clsbtn">&times;</span>
-            <span id='notify-msg'></span>
-        </div>
-        <form id="buy-ticket-form">
-            <input name="flightName" placeholder="Please enter flightName">
-            <input name="fullname" placeholder="Please enter your full name">
-            <button type="submit" id='buy-ticket-button'>Buy</button>
+    <div class="buy-ticket">
+        <h2>Покупка билета</h2>
+        <div class="buy-ticket__notify"></div>
+        <form class="buy-ticket__form">
+            <input class="buy-ticket__form__input" name="flightName" placeholder="Пожалуйста введите номер рейса">
+            <input class="buy-ticket__form__input" name="fullName" placeholder="Пожалуйста введите Фамилию Имя и Отчество">
+            <div>
+                <span>Пожалуйста выберите класс билета: </span>
+                <input type="radio" name="flightClass" value='0' checked>
+                <label>Cтандарт</label>
+                
+                <input type="radio" name="flightClass" value='1'>
+                <label>Бизнес</label>
+            </div>
+            <br>
+            <button class="buy-ticket__form__submit-button" type="submit" >Купить</button>
         </form>
     </div>
     

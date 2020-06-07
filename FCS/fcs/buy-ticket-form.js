@@ -1,91 +1,111 @@
-const FULL_NAME_ERR = 'fullnameErr';
-const FLIGHT_NAME_ERR = 'flightNameErr';
 const FULL_NAME_REGEXP = /^([a-zA-Z ])*$/;
+const FLIGHT_CLASS_NAMES = {
+  0: 'Стандарт',
+  1: 'Бизнес',
+};
+const FORM_VALIDATION_ERRORS = {
+  FULL_NAME_ERROR: 'Поле ФИО может содержать только латинские буквы и пробелы!',
+  FLIGHT_NAME_ERROR: 'Такого рейса не существует!',
+};
 let CURRENT_WORLD = bigWorld;
 
-const form = document.getElementById('buy-ticket-form');
+const form = document.querySelector('.buy-ticket__form');
+const buyButton = document.querySelector('.buy-ticket__form__submit-button');
 const flightNameInput = form.elements.flightName;
-const fullnameInput = form.elements.fullname;
-const errNotify = document.getElementById('errNotify');
-const notify = document.getElementById('notify');
-const notifyMsg = document.getElementById('notify-msg');
-const notifyClsBtn = document.getElementsByClassName('notify-clsbtn')[0];
-const buyButton = document.getElementById('buy-ticket-button');
+const fullNameInput = form.elements.fullName;
+
+const notifyContainer = document.querySelector('.buy-ticket__notify');
 
 /**
-* @typedef { Object } Errors
-* ключи    - id HTML-контейнеров для отображения ошибки
+* @typedef { Object } FormValidationErrors
+* ключи    - код ошибки
 * значения - текст ошибки
 */
-const errors = {};
+const formValidationErrors = {};
 
-form.addEventListener('submit', submitHandler);
+form.addEventListener('submit', handleFormSubmit);
 flightNameInput.addEventListener('change', validateFlightNameInput);
-fullnameInput.addEventListener('input', validateFullnameInput);
-notifyClsBtn.addEventListener('click', notifyClsBtnHandler);
+fullNameInput.addEventListener('input', validateFullNameInput);
 
 /**
  * Добавляет ошибку к отображению.
- * @param {string} elementId id HTML-контейнера
- * @param {string} message текст ошибки
+ * @param {string} erroreCode - код ошибки
  */
-function addErr(elementId, message) {
-  errors[elementId] = message;
-  renderErrors();
+function addFormValidationError(erroreCode) {
+  formValidationErrors[erroreCode] = FORM_VALIDATION_ERRORS[erroreCode];
+  renderFormValidationErrors();
 }
 
 /**
- * Убирает ошибку из отображению.
- * @param {string} elementId id HTML-контейнера
+ * Убирает ошибку из отображения.
+ * @param {string} erroreCode - код ошибки
  */
-function delErr(elementId) {
-  delete errors[elementId];
-  modifyErrElement(elementId);
-  renderErrors();
+function deleteFormValidationError(erroreCode) {
+  delete formValidationErrors[erroreCode];
+  renderFormValidationErrors();
 }
 
 /**
- * Рендерит блок с ошибками если нужно
+ * Рендерит блок с ошибками валидации формы
  */
-function renderErrors() {
-  if (Object.keys(errors).length) {
-    errNotify.classList.add('error');
+function renderFormValidationErrors() {
+  clearNotifyContainer();
+
+  if (Object.keys(formValidationErrors).length) {
+    title = document.createElement('h2');
+    title.innerText = 'Ошибка заполнения формы';
+    list = document.createElement('ul');
+
+    notifyContainer.classList.add('buy-ticket__notify_error');
     buyButton.disabled = true;
-    Object.keys(errors).map((elementId) => modifyErrElement(elementId));
+    notifyContainer.append(title, list);
+    items = Object.keys(formValidationErrors).map((errorId) => createErrorItem(errorId));
+    list.append(...items);
   } else {
-    errNotify.classList.remove('error');
     buyButton.disabled = false;
   }
 }
 
 /**
- * Изменяет свойства HTML-контейнера отображающего ошибку
- * @param {string} elementId id HTML-контейнера
+ * Очищает контейнер для нотификаций
+ * @param {HTMLelement} node - нода, которую надо очистить
  */
-function modifyErrElement(elementId) {
-  const el = document.getElementById(elementId);
-  el.innerText = errors[elementId];
-  errors[elementId] ? el.classList.add('showErrMsg') : el.classList.remove('showErrMsg');
+function clearNotifyContainer() {
+  while (notifyContainer.lastElementChild) {
+    notifyContainer.removeChild(notifyContainer.lastElementChild);
+  }
+  notifyContainer.className = 'buy-ticket__notify';
 }
 
 /**
- * Валидируем поле "Номер рейса"
- * @param {MouseEvent} event событие
+ * Возвращает html-элемент с текстом ошибок
+ * @param {string} errorId - id ошибки
+ * @return {HTMLelement} - html-элемент с текстом ошибок
+ */
+function createErrorItem(errorId) {
+  const el = document.createElement('li');
+  el.innerText = formValidationErrors[errorId];
+  return el;
+}
+
+/**
+ * Валидирует поле "Номер рейса"
+ * @param {MouseEvent} event - событие
  */
 function validateFlightNameInput(event) {
   if (!isFlightExists(event.target.value)) {
-    event.target.classList.add('invalid');
-    addErr(FLIGHT_NAME_ERR, 'Такого рейса не существует!');
+    event.target.classList.add('buy-ticket__form__input_invalid');
+    addFormValidationError('FLIGHT_NAME_ERROR');
   } else {
-    event.target.classList.remove('invalid');
-    delErr(FLIGHT_NAME_ERR);
+    event.target.classList.remove('buy-ticket__form__input_invalid');
+    deleteFormValidationError('FLIGHT_NAME_ERROR');
   }
 }
 
 /**
  * проверяет существует ли такой рейс
- * @param {string} flightName Номер рейса
- * @return {boolean} да/нет
+ * @param {string} flightName - Номер рейса
+ * @return {boolean} - да/нет
  */
 function isFlightExists(flightName) {
   return CURRENT_WORLD.flights[flightName];
@@ -93,62 +113,84 @@ function isFlightExists(flightName) {
 
 
 /**
- * Валидируем поле "Полное Имя"
- * @param {MouseEvent} event событие
+ * Валидирует поле "ФИО"
+ * @param {MouseEvent} event - событие
  */
-function validateFullnameInput(event) {
+function validateFullNameInput(event) {
   if (!FULL_NAME_REGEXP.test(event.target.value)) {
-    event.target.classList.add('invalid');
-    addErr(FULL_NAME_ERR, 'Поле full name может содержать только латинские буквы и пробелы!');
+    event.target.classList.add('buy-ticket__form__input_invalid');
+    addFormValidationError('FULL_NAME_ERROR');
   } else {
-    event.target.classList.remove('invalid');
-    delErr(FULL_NAME_ERR);
+    event.target.classList.remove('buy-ticket__form__input_invalid');
+    deleteFormValidationError('FULL_NAME_ERROR');
   }
 }
 
 /**
- * обрабатываем форму покупки билета
- * @param {MouseEvent} event событие
+ * обрабатывает форму покупки билета
+ * @param {MouseEvent} event - событие
  */
-function submitHandler(event) {
+function handleFormSubmit(event) {
   event.preventDefault();
 
   const formData = {
     flightName: form.elements.flightName.value,
-    fullName: form.elements.fullname.value,
+    fullName: form.elements.fullName.value,
+    flightClass: parseInt(form.elements.flightClass.value),
   };
 
   let res;
+  const dateNow = new Date();
+  const hoursNow = dateNow.getHours();
+  const minutesNow = dateNow.getMinutes();
+
   try {
-    res = buyTicket(CURRENT_WORLD, formData.flightName, makeTime(5, 10), formData.fullName);
+    res = buyTicket(
+        CURRENT_WORLD,
+        formData.flightName,
+        makeTime(hoursNow, minutesNow),
+        formData.fullName,
+        formData.flightClass);
   } catch (error) {
-    notifyMsg.innerText = error.message;
-    notify.classList.add('error');
+    renderFormExecutionResult(error.message, false);
     return;
   }
 
   console.log(res.ticket);
-  notifyMsg.innerText = ticketInfo(res.ticket);
-  notify.classList.add('success');
-  form.elements.flightName.value = form.elements.fullname.value = '';
+  renderFormExecutionResult(prepareTicketInfo(res.ticket), true);
+  form.elements.flightName.value = form.elements.fullName.value = '';
   CURRENT_WORLD = res.world;
 }
 
 /**
- * убирает блок нотификации
+ * Рендерит блок с результатами обработки формы
+ * @param {string} message - текст для отображения
+ * @param {boolean} isSuccess - была ли обработка формы успешной
  */
-function notifyClsBtnHandler() {
-  notify.classList.remove('error', 'success');
+function renderFormExecutionResult(message, isSuccess) {
+  clearNotifyContainer();
+
+  const actualNotifyClass = isSuccess ? 'buy-ticket__notify_success' : 'buy-ticket__notify_error';
+  notifyContainer.classList.add(actualNotifyClass);
+
+  closeButton = document.createElement('span');
+  closeButton.classList.add('buy-ticket__notify__close-button');
+  messageContainer = document.createElement('span');
+  messageContainer.innerText = message;
+  closeButton.addEventListener('click', clearNotifyContainer);
+
+  notifyContainer.append(messageContainer, closeButton);
 }
 
 /**
  * Формирует информацию о билете
- * @param {Ticket} ticket билет
- * @return {string} информиция о билете
+ * @param {Ticket} ticket - билет
+ * @return {string} - информиция о билете
  */
-function ticketInfo(ticket) {
+function prepareTicketInfo(ticket) {
   const text = `Вы успешно купили билет на рейс ${ticket.flight}
   Номер билета: ${ticket.id}
-  Место: ${ticket.seat}`;
+  Место: ${ticket.seat}
+  Класс: ${FLIGHT_CLASS_NAMES[ticket.type]}`;
   return text;
 }
