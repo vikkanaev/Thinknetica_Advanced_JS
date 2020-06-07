@@ -10,7 +10,7 @@ const FORM_VALIDATION_ERRORS = {
 let CURRENT_WORLD = bigWorld;
 
 const form = document.querySelector('.buy-ticket__form');
-const buyButton = document.querySelector('.buy-ticket__form__submit-button');
+const buyButton = document.querySelector('.buy-ticket__form-submit-button');
 const flightNameInput = form.elements.flightName;
 const fullNameInput = form.elements.fullName;
 
@@ -94,10 +94,10 @@ function createErrorItem(errorId) {
  */
 function validateFlightNameInput(event) {
   if (!isFlightExists(event.target.value)) {
-    event.target.classList.add('buy-ticket__form__input_invalid');
+    event.target.classList.add('buy-ticket__form-input_invalid');
     addFormValidationError('FLIGHT_NAME_ERROR');
   } else {
-    event.target.classList.remove('buy-ticket__form__input_invalid');
+    event.target.classList.remove('buy-ticket__form-input_invalid');
     deleteFormValidationError('FLIGHT_NAME_ERROR');
   }
 }
@@ -118,10 +118,10 @@ function isFlightExists(flightName) {
  */
 function validateFullNameInput(event) {
   if (!FULL_NAME_REGEXP.test(event.target.value)) {
-    event.target.classList.add('buy-ticket__form__input_invalid');
+    event.target.classList.add('buy-ticket__form-input_invalid');
     addFormValidationError('FULL_NAME_ERROR');
   } else {
-    event.target.classList.remove('buy-ticket__form__input_invalid');
+    event.target.classList.remove('buy-ticket__form-input_invalid');
     deleteFormValidationError('FULL_NAME_ERROR');
   }
 }
@@ -174,7 +174,7 @@ function renderFormExecutionResult(message, isSuccess) {
   notifyContainer.classList.add(actualNotifyClass);
 
   closeButton = document.createElement('span');
-  closeButton.classList.add('buy-ticket__notify__close-button');
+  closeButton.classList.add('buy-ticket__notify-close-button');
   messageContainer = document.createElement('span');
   messageContainer.innerText = message;
   closeButton.addEventListener('click', clearNotifyContainer);
