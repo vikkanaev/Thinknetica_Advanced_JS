@@ -1,4 +1,3 @@
-const FULL_NAME_REGEXP = /^([a-zA-Z ])*$/;
 const FLIGHT_CLASS_NAMES = {
   0: 'Стандарт',
   1: 'Бизнес',
@@ -7,14 +6,36 @@ const FORM_VALIDATION_ERRORS = {
   FULL_NAME_ERROR: 'Поле ФИО может содержать только латинские буквы и пробелы!',
   FLIGHT_NAME_ERROR: 'Такого рейса не существует!',
 };
-let CURRENT_WORLD = bigWorld;
+const EVENT_HANDLER_CONFIG = {
+  'fullName': {validationRule: isFullNameValid, erroreCode: 'FULL_NAME_ERROR'},
+  'flightName': {validationRule: isFlightExists, erroreCode: 'FLIGHT_NAME_ERROR'},
+};
 
+/**
+ * Валидирует поле формы "ФИО"
+ * @param {string} fullName - ФИО
+ * @return {boolean} да/нет
+ */
+function isFullNameValid(fullName) {
+  const FULL_NAME_REGEXP = /^([a-zA-Z ])*$/;
+  return FULL_NAME_REGEXP.test(fullName);
+}
+
+/**
+ * Проверяет существует ли такой рейс
+ * @param {string} flightName - Номер рейса
+ * @return {boolean} - да/нет
+ */
+function isFlightExists(flightName) {
+  return CURRENT_WORLD.flights[flightName];
+}
+
+let CURRENT_WORLD = bigWorld;
 const form = document.querySelector('.buy-ticket__form');
-const buyButton = document.querySelector('.buy-ticket__form-submit-button');
 const flightNameInput = form.elements.flightName;
 const fullNameInput = form.elements.fullName;
-
 const notifyContainer = document.querySelector('.buy-ticket__notify');
+const buyButton = document.querySelector('.buy-ticket__form-submit-button');
 
 /**
 * @typedef { Object } FormValidationErrors
@@ -24,8 +45,8 @@ const notifyContainer = document.querySelector('.buy-ticket__notify');
 const formValidationErrors = {};
 
 form.addEventListener('submit', handleFormSubmit);
-flightNameInput.addEventListener('change', validateFlightNameInput);
-fullNameInput.addEventListener('input', validateFullNameInput);
+flightNameInput.addEventListener('change', validateFormInput);
+fullNameInput.addEventListener('input', validateFormInput);
 
 /**
  * Добавляет ошибку к отображению.
@@ -89,40 +110,20 @@ function createErrorItem(errorId) {
 }
 
 /**
- * Валидирует поле "Номер рейса"
- * @param {MouseEvent} event - событие
+ * Валидирует поля ввода формы заказа билета
+ * @param {MouseEvent} event - событие типа клик
  */
-function validateFlightNameInput(event) {
-  if (!isFlightExists(event.target.value)) {
+function validateFormInput(event) {
+  const targetName = event.target.name;
+  if (!['fullName', 'flightName'].includes(targetName)) return;
+
+  const config = EVENT_HANDLER_CONFIG[targetName];
+  if (!config.validationRule(event.target.value)) {
     event.target.classList.add('buy-ticket__form-input_invalid');
-    addFormValidationError('FLIGHT_NAME_ERROR');
+    addFormValidationError(config.erroreCode);
   } else {
     event.target.classList.remove('buy-ticket__form-input_invalid');
-    deleteFormValidationError('FLIGHT_NAME_ERROR');
-  }
-}
-
-/**
- * проверяет существует ли такой рейс
- * @param {string} flightName - Номер рейса
- * @return {boolean} - да/нет
- */
-function isFlightExists(flightName) {
-  return CURRENT_WORLD.flights[flightName];
-}
-
-
-/**
- * Валидирует поле "ФИО"
- * @param {MouseEvent} event - событие
- */
-function validateFullNameInput(event) {
-  if (!FULL_NAME_REGEXP.test(event.target.value)) {
-    event.target.classList.add('buy-ticket__form-input_invalid');
-    addFormValidationError('FULL_NAME_ERROR');
-  } else {
-    event.target.classList.remove('buy-ticket__form-input_invalid');
-    deleteFormValidationError('FULL_NAME_ERROR');
+    deleteFormValidationError(config.erroreCode);
   }
 }
 
