@@ -4,7 +4,7 @@
   "description": "",
   "main": ".eslintrc.js",
   "directories": {
-    "test": "test"
+    "test": "./**/**/*.test.js"
   },
   "dependencies": {
     "diff": ">=3.5.0"
@@ -17,7 +17,7 @@
     "mocha": "^4.1.0"
   },
   "scripts": {
-    "test": "mocha || true",
+    "test": "mocha --reporter nyan --recursive './Lesson_6/**/*.test.js'",
     "lint": "./node_modules/.bin/eslint **/*.js"
   },
   "repository": {
