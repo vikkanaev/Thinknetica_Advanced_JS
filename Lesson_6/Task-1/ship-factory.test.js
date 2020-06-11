@@ -3,31 +3,38 @@ const {ShipFactory} = require('./ship-factory.js');
 const {Position} = require('./position.js');
 const expect = require('chai').expect;
 
-// const argo = factory.makeNewShip('Argo', 'Sailboat', new Position(0, 0));
-
 describe('ShipFactory', () => {
   describe('#makeNewShip', () => {
-    it('can`t create ship with same name', () => {
-      const factory = new ShipFactory();
-      factory.makeNewShip('Argo', 'Sailboat', new Position(0, 0));
+    let factory;
 
-      expect(() => factory.makeNewShip('Argo', 'Boat', new Position(0, 0))).to.throw('This ship name already exists.');
-      expect(factory._ships.length).to.equal(1);
+    describe('when Argo not exists yet', () => {
+      beforeEach(() => {
+        factory = new ShipFactory();
+      });
+
+      it('makes new ship', () => {
+        expect(factory.makeNewShip('Argo', 'Sailboat', new Position(0, 0))).to.be.an.instanceof(Ship);
+        expect(factory._ships.length).to.equal(1);
+      });
+
+      it('trow error when no Position object given', () => {
+        expect(() => factory.makeNewShip('Argo', 'Sailboat', {})).to.throw('Wrong input. Position object required.');
+        expect(factory._ships.length).to.equal(0);
+      });
     });
 
-    it('trow error when no Position object given', () => {
-      const factory = new ShipFactory();
+    describe('when Argo exists', () => {
+      let factory;
 
-      expect(() => factory.makeNewShip('Argo', 'Sailboat', {})).to.throw('Wrong input. Position object required.');
-      expect(factory._ships.length).to.equal(0);
-    });
+      beforeEach(() => {
+        factory = new ShipFactory();
+        factory.makeNewShip('Argo', 'Sailboat', new Position(0, 0));
+      });
 
-    it('makes new ship', () => {
-      const factory = new ShipFactory();
-      const argo = factory.makeNewShip('Argo', 'Sailboat', new Position(0, 0));
-
-      expect(argo instanceof Ship).to.equal(true);
-      expect(factory._ships.length).to.equal(1);
+      it('can`t create ship with same name', () => {
+        expect(() => factory.makeNewShip('Argo', 'Bo', new Position(0, 0))).to.throw('This ship name already exists.');
+        expect(factory._ships.length).to.equal(1);
+      });
     });
   });
 });
