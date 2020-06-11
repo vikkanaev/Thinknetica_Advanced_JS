@@ -3,27 +3,31 @@ const expect = require('chai').expect;
 
 describe('Position', () => {
   describe('#distanceTo', () => {
-    it('calculate distanceTo', () => {
-      const position1 = new Position(0, 0);
-      const position2 = new Position(10, 0);
+    const position1 = new Position(0, 0);
+    const position2 = new Position(10, 0);
 
+    it('calculate distanceTo', () => {
       expect(position1.distanceTo(position2)).to.equal(10);
     });
   });
 
   describe('#eq', () => {
-    it('compare two equal position', () => {
+    describe('when equal', () => {
       const position1 = new Position(5, 1);
       const position2 = new Position(5, 1);
 
-      expect(position1.eq(position2)).to.equal(true);
+      it('return true', () => {
+        expect(position1.eq(position2)).to.equal(true);
+      });
     });
 
-    it('compare two not equal position', () => {
+    describe('when not equal', () => {
       const position1 = new Position(0, 0);
       const position2 = new Position(10, 0);
 
-      expect(position1.eq(position2)).to.equal(false);
+      it('return false', () => {
+        expect(position1.eq(position2)).to.equal(false);
+      });
     });
   });
 });
