@@ -10,8 +10,9 @@ describe('Ship', () => {
 
   describe('#moveTo', () => {
     describe('when anchor dropped', () => {
+      beforeEach(() => titanic.dropAnchor());
+
       it('not move', () => {
-        titanic.dropAnchor();
         expect(() => titanic.moveTo(new Position(1, 0))).to.throw('You need to raise anchor');
         expect(titanic.position.x).to.equal(0);
         expect(titanic.position.y).to.equal(0);
@@ -67,37 +68,45 @@ describe('Ship', () => {
   });
 
   describe('#dropAnchor', () => {
-    it('can drop anchor', () => {
-      expect(titanic.dropAnchor()).to.equal(true);
-      expect(titanic.isAnchorDroped()).to.equal(true);
+    describe('when anchor raised', () => {
+      it('can drop anchor', () => {
+        expect(titanic.dropAnchor()).to.equal(true);
+        expect(titanic.isAnchorDroped()).to.equal(true);
+      });
     });
 
-    it('trow error when Anchor is already dropped', () => {
-      titanic.dropAnchor();
+    describe('when anchor dropped', () => {
+      beforeEach(() => titanic.dropAnchor());
 
-      expect(() => titanic.dropAnchor()).to.throw('Anchor is already dropped.');
-      expect(titanic.isAnchorDroped()).to.equal(true);
+      it('trow error when Anchor is already dropped', () => {
+        expect(() => titanic.dropAnchor()).to.throw('Anchor is already dropped.');
+        expect(titanic.isAnchorDroped()).to.equal(true);
+      });
     });
   });
 
   describe('#riseAnchor', () => {
-    it('can raise anchor', () => {
-      titanic.dropAnchor();
+    describe('when anchor dropped', () => {
+      beforeEach(() => titanic.dropAnchor());
 
-      expect(titanic.riseAnchor()).to.equal(true);
-      expect(titanic.isAnchorDroped()).to.equal(false);
+      it('can raise anchor', () => {
+        expect(titanic.riseAnchor()).to.equal(true);
+        expect(titanic.isAnchorDroped()).to.equal(false);
+      });
     });
 
-    it('trow error when Anchor is already raised.', () => {
-      expect(() => titanic.riseAnchor()).to.throw('Anchor is already raised.');
-      expect(titanic.isAnchorDroped()).to.equal(false);
+    describe('when anchor raised', () => {
+      it('trow error when Anchor is already raised.', () => {
+        expect(() => titanic.riseAnchor()).to.throw('Anchor is already raised.');
+        expect(titanic.isAnchorDroped()).to.equal(false);
+      });
     });
   });
 
   describe('#distance', () => {
-    it('show total distance', () => {
-      titanic.moveTo(new Position(4, 0));
+    beforeEach(() => titanic.moveTo(new Position(4, 0)));
 
+    it('show total distance', () => {
       expect(titanic.distance()).to.equal(4);
     });
   });
