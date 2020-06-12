@@ -8,6 +8,12 @@ describe('Ship', () => {
     titanic = new Ship('Titanic', 'Olympic-class ocean liner', new Position(0, 0));
   });
 
+  describe('#new', () => {
+    it('trow error when no Position object given', () => {
+      expect(() => (new Ship('Titanic', 'liner', {}))).to.throw('Wrong input. Position object required.');
+    });
+  });
+
   describe('#moveTo', () => {
     describe('when anchor dropped', () => {
       beforeEach(() => titanic.dropAnchor());
