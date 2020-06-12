@@ -6,3 +6,6 @@ node_modules/
 
 # Optional eslint cache
 .eslintcache
+
+# Istanbul test coverage tool
+.nyc_output

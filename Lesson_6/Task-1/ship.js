@@ -54,7 +54,6 @@ function Ship(name, model, position ) {
         break;
       default:
         throw new Error(`Unsuportet directon: ${direction}`);
-        break;
     }
     return this.moveTo(newPosition);
   };
