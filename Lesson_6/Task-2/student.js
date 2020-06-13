@@ -27,6 +27,11 @@ function Student(fullName) {
  */
 function parseFullNameString(fullName) {
   // TODO: Переписать на промисы, когда мы их пройдем
+  // TODO: Вынести функцию парсинга в отдельный модуль (когда мы их пройдём ;)) `DadataGateway`
+  // (инкапсулирует обращение к внешнему сервису),
+  // разделить в этом модуле конфигурацию HTTP-клиента,
+  // непосредственное обращение к REST-методу API и обработку результата.
+  // TODO: Реализовать mock для обращения к внешнему API и протестировать реализацию
   const request = require('sync-request');
   const url = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/fio';
   const KEY = '4a284b02ba0fd8b054ba41c229b24188c83c2dc3';
@@ -37,7 +42,9 @@ function parseFullNameString(fullName) {
   if (!(body.suggestions[0] && body.suggestions[0]['data'])) throw new Error('No valid data from API');
   const data = body.suggestions[0]['data'];
 
-  if (!(data.surname && data.name && data.patronymic)) throw new Error('Full name is not full');
+  if (!(data.surname)) throw new Error('Surname required');
+  if (!(data.name)) throw new Error('Name required');
+  if (!(data.patronymic)) throw new Error('Patronymic required');
   const fio = {
     surname: data.surname,
     name: data.name,
