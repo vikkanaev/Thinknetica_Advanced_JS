@@ -19,7 +19,7 @@
     "nyc": "^15.1.0"
   },
   "scripts": {
-    "test": "mocha --recursive './Lesson_6/**/*.test.js'",
+    "test": "mocha --recursive './Lesson_[7]/**/*.test.js'",
     "test-with-coverage": "nyc mocha --recursive './Lesson_6/**/*.test.js'",
     "lint": "./node_modules/.bin/eslint **/*.js"
   },
