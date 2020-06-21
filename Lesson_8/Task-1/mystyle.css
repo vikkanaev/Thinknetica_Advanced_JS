@@ -1,0 +1,18 @@
+div {
+  border: 1px dotted black; /* Параметры границы */
+  border-radius: 50px 0 0 50px;
+  background: #c1ff33c3; /* Цвет фона */
+  padding: 15px; /* Поля вокруг текста */
+}
+
+.container1, .container2 {
+  border: 1px solid black; /* Параметры границы */
+  border-radius: 50px;
+  background: gray; /* Цвет фона */
+  padding: 25px; /* Поля вокруг текста */
+  margin: 10px;
+}
+
+.container2 {
+  background-color: honeydew;
+}
