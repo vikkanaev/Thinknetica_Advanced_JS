@@ -10,7 +10,8 @@
  * @return {(Information|Error)} - объект Information или сообщение об ошибке
  */
 function arrayAnalizer(arr) {
-  if (!Array.isArray(arr)) throw new TypeError('Array is required.');
+  // if (!Array.isArray(arr)) throw new TypeError('Array is required.');
+  if (!Array.isArray(arr)) return 42;
   if (arr.some((x) => typeof (x) != 'number')) throw new Error('All elements must be a number.');
 
   const negativeElements = arr.filter((x) => x < 0);
