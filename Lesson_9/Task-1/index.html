@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  Делаем исследование поведения стандартного промиса:
+  <pre>
+    <code>
+      const resolveP = new Promise((resolve, reject) =>{
+        setTimeout(() => {
+          console.log('resolveP Preparing data');
+          const backendData = {
+            code: 200,
+            fio: 'Ипполит Матвеевич Воробьянинов',
+          };
+          resolve(backendData);
+        }, 2000);
+      });
+
+      resolveP.then((data) => {
+        console.log('resolveP Get data ', data);
+        data.nickName = 'Киса';
+        return data;
+      });
+
+      const rejectP = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          console.log('rejectP Preparing data');
+          const backendData = {
+            code: 200,
+            fio: 'Ипполит Матвеевич Воробьянинов',
+          };
+          reject(backendData);
+        }, 2000);
+      });
+
+      rejectP.then((data) => {
+        console.log('rejectP Get data ', data);
+        data.nickName = 'Киса';
+        return data;
+      }).catch((err) => console.log('Err in rejectP'));    
+    </code>
+  </pre>
+
+  Теперь проверим как завершенный промис ведет себя в следующих стандартных ситуациях:
+  <ol>
+    <li>Промис в resolved получает then(cb) -> выполняет колбек(cb) и возвращает исходный промис</li>
+    <li>Промис в resolved получает catch(cb) -> возвращает исходный промис</li>
+    <li>Промис в rejected получает then(cb) -> выбрасывает ошибку и возвращает исходный промис</li>
+    <li>Промис в rejected получает catch(cb) -> выполняет колбек(cb) и возвращает исходный промис</li>
+  </ol>
+
+  Теперь проверим как ведет себя наш кастомный промис
+  <pre>
+      <code>
+        resolveCustomP.then(_ => console.log('ok')).then(_ => console.log('ok2'))
+        // ok
+        // ok2
+        // CustomPromise {__success__: Array(1), __error__: Array(0), __state__: "fulfilled", _callback: ƒ}
+        // Ожидаемо вернет результаты колбеков и сам промис
+
+        resolveCustomP.catch(_ => console.log('not ok'))
+        // CustomPromise {__success__: Array(1), __error__: Array(0), __state__: "fulfilled", _callback: ƒ}
+        // Вернет сам промис и ничего не выполнит
+
+        rejectCustomP.then(_ => console.log('ok'));
+        // CustomPromise {__success__: Array(1), __error__: Array(0), __state__: "rejected", _callback: ƒ}
+        // Uncaught Error: [object Object]
+        // вернет сам промис и просит ошибку
+
+        rejectCustomP.catch(_ => console.log('not ok handler'));
+        // not ok handler
+        // CustomPromise {__success__: Array(1), __error__: Array(0), __state__: "rejected", _callback: ƒ}
+        // выполнит колбек и вернет сам промис
+      </code>
+  </pre>
+
+
+  Теперь создадим наш кастомный промис сразу в финальных статусах
+  <pre>
+        <code>
+          p = CustomPromise.resolve((resolve, reject) =>{
+            setTimeout(() => {
+              console.log('resolveP Preparing data');
+              const backendData = {
+                code: 200,
+                fio: 'Ипполит Матвеевич Воробьянинов',
+              };
+              resolve(backendData);
+            }, 2000);
+          });
+          // ожидаемо колбеки не выполнились
+          p.then(d => console.log('ok'))
+          // ok
+          // CustomPromise {__success__: Array(0), __error__: Array(0), __state__: "fulfilled", _callback: ƒ}
+          // Ожидаемо выполнилось и вернулся промис
+        </code>
+    </pre>
+
+  <script src='custom-promise.js'></script>
+  <script src='script.js'></script>
+</body>
+</html>
