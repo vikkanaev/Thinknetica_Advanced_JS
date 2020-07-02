@@ -68,39 +68,3 @@ rejectCustomP.then((data) => {
   data.nickName = 'Киса';
   return data;
 });
-// resolveCustomP.catch(d => console.log('ok'));
-
-
-
-// async function f() {
-//   console.log('start script!');
-
-//   // const p1 = new CustomPromise((resolve, reject) => {
-//   const p1 = new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//       resolve('Ready!');
-//     }, 1000);
-//   });
-
-//   const p2 = new CustomPromise((resolve, reject) => {
-//     setTimeout(() => {
-//       reject(new Error('Err!!!'));
-//     }, 1000);
-//   });
-//   // .then((data) => {
-//   //   console.log(data);
-//   // }).catch((err) => {
-//   //   console.log('err');
-//   //   return 'azaza';
-//   // });
-
-//   const res1 = await p1;
-//   // console.log('got promise result: ' + res1);
-//   p1.then((r) => console.log(r));
-
-//   // const res2 = await p2;
-//   // console.log('got promise result: ' + res2);
-// };
-
-// f();
-
