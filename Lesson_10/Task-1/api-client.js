@@ -1,11 +1,11 @@
 /* eslint-disable require-jsdoc */
-class HtmlClient {
+class ApiClient {
   constructor({apiUrl, apiKey}) {
     this.apiUrl = `${apiUrl}?api_key=${apiKey}&limit=1&q=`;
     this.xhr = new XMLHttpRequest();
   }
 
-  call(query) {
+  get(query) {
     const xhr = this.xhr;
     xhr.abort();
     return new Promise((resolve, reject) => {

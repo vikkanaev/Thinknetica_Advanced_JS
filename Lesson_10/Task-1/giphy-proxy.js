@@ -1,31 +1,30 @@
 /* eslint-disable require-jsdoc */
 class GiphyProxy {
-  constructor({htmlClient}) {
-    this.htmlClient = htmlClient;
+  constructor({apiClient}) {
+    this.apiClient = apiClient;
     this.storage ={};
   }
 
-  findImg(query) {
-    debugger;
-    return new Promise((resolve, reject) => {
-      if (!query) {
-        reject(new Error('no image for no query'));
-      } else if (this.storage[query]) {
-        console.log('Find in cache!');
-        resolve(this.storage[query]);
-      } else {
-        resolve(this._getImgFromGiphy(query));
-      }
-    });
+  async findImage(query) {
+    if (!query) {
+      return new Error('no image for no query');
+    };
+
+    if (this.storage[query]) {
+      console.log('Find in cache!');
+      return this.storage[query];
+    };
+
+    return await(this._getImageFromGiphy(query));
   };
 
-  _getImgFromGiphy(query) {
-    return this.htmlClient.call(query)
-        .then((res) => this._createAndStoreImg(query, res))
+  _getImageFromGiphy(query) {
+    return this.apiClient.get(query)
+        .then((res) => this._createAndStoreImage(query, res))
         .catch((err) => new Error('no image from API'));
   }
 
-  _createAndStoreImg(query, res) {
+  _createAndStoreImage(query, res) {
     const url = res.data[0].images.fixed_height_downsampled.url;
     const img = document.createElement('img');
     img.src = url;
